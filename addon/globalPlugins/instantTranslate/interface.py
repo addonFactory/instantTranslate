@@ -50,10 +50,6 @@ class InstantTranslateSettingsPanel(gui.SettingsPanel):
 		temp.remove(lngModule.g("auto"))
 		self._intoChoice = helper.addLabeledControl(intoLabelText, wx.Choice, choices=temp)
 		
-		# Translators: A setting in addon settings dialog.
-		self.copyTranslationChk = helper.addItem(wx.CheckBox(self, label=_("Copy translation result to clipboard")))
-		self.copyTranslationChk.SetValue(config.conf['instanttranslate']['copytranslatedtext'])
-		
 		# Translators: A setting in addon settings dialog, shown if source language is on auto.
 		swapLabelText = _("Language for swapping:")
 		self._swapChoice = helper.addLabeledControl(swapLabelText, wx.Choice, choices=temp)
@@ -63,6 +59,10 @@ class InstantTranslateSettingsPanel(gui.SettingsPanel):
 		self.autoSwapChk = helper.addItem(wx.CheckBox(self, label=_("Activate the auto-swap if recognized source is equal to the target (experimental)")))
 		self.autoSwapChk.SetValue(config.conf['instanttranslate']['autoswap'])
 		
+		# Translators: A setting in addon settings dialog.
+		self.copyTranslationChk = helper.addItem(wx.CheckBox(self, label=_("Copy translation result to clipboard")))
+		self.copyTranslationChk.SetValue(config.conf['instanttranslate']['copytranslatedtext'])
+				
 		iLang_from = self._fromChoice.FindString(self.getDictKey(config.conf['instanttranslate']['from']))
 		iLang_to = self._intoChoice.FindString(self.getDictKey(config.conf['instanttranslate']['into']))
 		iLang_swap = self._swapChoice.FindString(self.getDictKey(config.conf['instanttranslate']['swap']))
