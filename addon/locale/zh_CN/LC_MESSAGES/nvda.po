@@ -6,216 +6,285 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: instantTranslate 4.1\n"
-"Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2013-03-13 16:44+0100\n"
-"PO-Revision-Date: 2019-01-09 07:51+0800\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2021-06-13 16:30+0800\n"
+"PO-Revision-Date: 2021-06-13 18:15+0800\n"
 "Last-Translator: dingpengyu <dingpengyu06@gmail.com>\n"
-"Language-Team: NVDASimplified Chinese team All volunteers <Copyright (C) "
-"2010-2019>\n"
+"Language-Team: Cary-Rowen <manchen_0528@outlook.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
+#: addon\globalPlugins\instantTranslate\__init__.py:158
 msgid ""
 "Instant Translate layer commands. t translates selected text, shift+t "
 "translates clipboard text, a announces current swap configuration, s swaps "
 "source and target languages, c copies last result to clipboard, i identify "
-"the language of selected text."
+"the language of selected text, l translates last spoken text."
 msgstr ""
-"实时翻译命令： t 翻译选择的文本， shift+t 翻译剪贴板中的文本， a 朗读当前语言"
+"命令接收面板： t 翻译选择的文本， shift+t 翻译剪贴板中的文本， a 朗读当前语言"
 "配置， s 切换来源和目标语言， c 复制最近的结果到剪贴板， i 显示当前文本的语"
-"言， h 显示此消息"
-
-#. Translators: name of the option in the menu.
-msgid "Instant &Translate Settings..."
-msgstr "实时翻译设置(&T)"
-
-#. Translators: tooltip text for the menu item.
-msgid "Select languages to be used for translation."
-msgstr "选择一个需要翻译的语言。"
+"言， l 翻译最后朗读的文本， o 打开翻译设置对话框， h 显示此帮助信息。"
 
 #. Translators: message presented when user presses the shortcut key for translating clipboard text but the clipboard is empty.
+#: addon\globalPlugins\instantTranslate\__init__.py:170
 msgid "There is no text on the clipboard"
-msgstr "未在剪贴板中找到文本"
+msgstr "剪贴板内无文本"
 
 #. Translators: message presented in input help mode, when user presses the shortcut keys for this addon.
+#: addon\globalPlugins\instantTranslate\__init__.py:174
 msgid ""
 "Translates clipboard text from one language to another using Google "
 "Translate."
-msgstr "使用 google 翻译将剪贴板上的文本翻译为其他语言。"
+msgstr "翻译剪贴板文本"
 
 #. Translators: user has pressed the shortcut key for translating selected text, but no text was actually selected.
 #. Translators: user has pressed the shortcut key for identifying the language of selected text, but no text was actually selected.
+#: addon\globalPlugins\instantTranslate\__init__.py:187
+#: addon\globalPlugins\instantTranslate\__init__.py:298
 msgid "no selection"
-msgstr "没有选择的文本"
+msgstr "未选择文本"
 
 #. Translators: message presented in input help mode, when user presses the shortcut keys for this addon.
+#: addon\globalPlugins\instantTranslate\__init__.py:191
 msgid ""
 "Translates selected text from one language to another using Google Translate."
-msgstr "使用 google 翻译将剪贴板上的文本翻译为其他语言。"
+msgstr "翻译所选文本。"
 
 #. Translators: message presented to announce that the source and target languages have been swapped.
+#: addon\globalPlugins\instantTranslate\__init__.py:260
 msgid "Languages swapped"
-msgstr "语言已交换"
+msgstr "已切换语言。"
 
 #. Translators: message presented to announce the current source and target languages.
+#: addon\globalPlugins\instantTranslate\__init__.py:262
+#: addon\globalPlugins\instantTranslate\__init__.py:270
 msgid "Translate: from {lang1} to {lang2}"
 msgstr "翻译：从{lang1}到{lang2}"
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:265
 msgid "It swaps source and target languages."
-msgstr "切换来源和目标语言。"
+msgstr "切换源语言和目标语言。"
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:272
 msgid "It announces the current source and target languages."
-msgstr "朗读当前来源和目标语言。"
+msgstr "朗读元语言和目标语言。"
 
 #. Translators: message presented to announce a successful copy
+#: addon\globalPlugins\instantTranslate\__init__.py:280
 msgid "Last translation copied in clipboard"
-msgstr "拷贝最近的翻译结果到剪贴板"
+msgstr "拷贝最后一次翻译结果到剪贴板"
 
 #. Translators: message presented to announce no previous translation disponibility
+#: addon\globalPlugins\instantTranslate\__init__.py:283
 msgid "No stored translation"
-msgstr "未存储翻译结果"
+msgstr "未保存翻译结果"
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:285
 msgid "It copies the last translation to clipboard"
 msgstr "拷贝翻译结果到剪贴板"
 
+#: addon\globalPlugins\instantTranslate\__init__.py:302
 msgid "Language is..."
 msgstr "语言是..."
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:315
 msgid "It identifies the language of selected text"
-msgstr "显示所选文本的语言"
+msgstr "读出所选文本的语言"
 
+#. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:324
+msgid "It translates the last spoken text"
+msgstr "翻译最后一次朗读的文本"
+
+#: addon\globalPlugins\instantTranslate\__init__.py:327
 msgid ""
 "t translates selected text, shift+t translates clipboard text, a announces "
 "current swap configuration, s swaps source and target languages, c copies "
-"last result to clipboard, i identify the language of selected text, h "
-"displays this message."
+"last result to clipboard, i identify the language of selected text, l "
+"translates last spoken text, o open translation settings dialog, h displays "
+"this message."
 msgstr ""
 "t 翻译选择的文本， shift+t 翻译剪贴板中的文本， a 朗读当前语言配置， s 切换来"
-"源和目标语言， c 复制最近的结果到剪贴板， i 显示当前文本的语言， h 显示此消"
-"息。"
+"源和目标语言， c 复制最近的结果到剪贴板， i 读出当前文本的语言， l 翻译最后一"
+"次朗读的文本， o 打开翻译设置对话框， h 读出此帮助信息。"
 
 #. Translators: name of the dialog.
-msgid "Instant Translate Settings"
-msgstr "实时翻译设置"
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on to be shown on installation and add-on information.
+#: addon\globalPlugins\instantTranslate\interface.py:26 buildVars.py:15
+msgid "Instant Translate"
+msgstr "及时翻译"
 
 #. Translators: Help message for a dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:35
 msgid "Select translation source and target language:"
-msgstr "选择翻译来源和目标语言："
+msgstr "选择翻译的源语言和目标语言："
 
 #. Translators: A setting in addon settings dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:39
 msgid "Source language:"
-msgstr "来源语言："
+msgstr "源语言："
 
 #. Translators: A setting in addon settings dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:48
 msgid "Target language:"
 msgstr "目标语言："
 
-#. Translators: A setting in addon settings dialog.
-msgid "Copy translation result to clipboard"
-msgstr "拷贝翻译结果到剪贴板"
-
 #. Translators: A setting in addon settings dialog, shown if source language is on auto.
+#: addon\globalPlugins\instantTranslate\interface.py:54
 msgid "Language for swapping:"
-msgstr "自动来源语言切换："
+msgstr "语言切换"
 
 #. Translators: A setting in addon settings dialog, shown if source language is on auto.
+#: addon\globalPlugins\instantTranslate\interface.py:59
 msgid ""
 "Activate the auto-swap if recognized source is equal to the target "
 "(experimental)"
-msgstr "激活自动语言交换（如果识别出的来源与目标语言相同）。"
+msgstr "启用自动切换语言（如果检测到源语言和目标语言相同）。"
+
+#. Translators: A setting in addon settings dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:63
+msgid "Copy translation result to clipboard"
+msgstr "拷贝翻译结果到剪贴板"
 
 #. Translators: An option to automatically detect source language for translation.
+#: addon\globalPlugins\instantTranslate\langslist.py:23
 msgid "Automatically detect language"
 msgstr "自动检测语言"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:25
 msgid "Cebuano"
 msgstr "宿务语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:27
 msgid "Esperanto"
 msgstr "世界语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:29
+msgid "Hawaiian"
+msgstr "Hawaiian"
+
+#. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:31
 msgid "Hmong"
 msgstr "苗语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:33
 msgid "Creole Haiti"
 msgstr "海地克里奥尔语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:35
 msgid "Javanese"
 msgstr "日语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:37
+msgid "Kurdish"
+msgstr "Kurdish"
+
+#. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:39
 msgid "Latin"
 msgstr "拉丁语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:41
 msgid "Malagasy"
 msgstr "马达加斯加语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:43
 msgid "Myanmar (Burmese)"
 msgstr "缅甸语（缅甸）"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:45
 msgid "Chichewa"
 msgstr "奇切瓦语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:47
+msgid "Sindhi"
+msgstr "Sindhi"
+
+#. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:49
+msgid "Samoan"
+msgstr "萨摩亚语"
+
+#. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:51
+msgid "Shona"
+msgstr "修纳语"
+
+#. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:53
 msgid "Somali"
 msgstr "索马里语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:55
 msgid "Sesotho"
 msgstr "塞索托语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:57
 msgid "Sundanese"
 msgstr "巽他语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:59
 msgid "Tagalog"
 msgstr "塔加拉族语"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:61
 msgid "Yiddish"
 msgstr "意第绪语"
 
+#: addon\globalPlugins\instantTranslate\translator.py:91
 msgid "unavailable"
 msgstr "不可用"
 
+#. We have probably been blocked, so stop trying to translate.
+#. log.exception("Instant translate: Can not translate text '%s'" %chunk)
+#. raise e
+#: addon\globalPlugins\instantTranslate\translator.py:106
+msgid "Translation failed"
+msgstr "翻译失败"
+
 #. Translators: the label of a message box dialog.
+#: addon\installTasks.py:25
 msgid ""
 "You have installed an old and incompatible version of this addon. Do you "
 "want to uninstall the old version?"
-msgstr "您已经安装了一个不匹配的旧的add-on版本。请问您要卸载此老版本吗？"
+msgstr "您已经安装了一个不兼容的旧版插件。请问您要卸载旧版吗？"
 
 #. Translators: the title of a message box dialog.
+#: addon\installTasks.py:27
 msgid "Uninstall incompatible add-on"
-msgstr "卸载不匹配的 add-on"
-
-#. Add-on summary, usually the user visible name of the addon.
-#. Translators: Summary for this add-on to be shown on installation and add-on information.
-msgid "Instant Translate"
-msgstr "实时翻译"
+msgstr "卸载不兼容的插件"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#: buildVars.py:18
 msgid ""
-"This addon translates selected or clipboard text using the Google Translate "
+"This addon translates selected or clipboard text using the Yandex Translate "
 "service and presents it."
 msgstr ""
-"此插件利用 google 提供的翻译服务，将选中的或剪贴板内的文字进行翻译和呈现。按"
-"下“NVDA+SHIFT+T”组合键可翻译选中的文本；按下“NVDA+SHIFT+Y”组合键可翻译剪贴板"
-"中包含的文本。"
+"该插件使用 google 服务翻译所选文本或剪贴板文本以及NVDA最后一次朗读的文本，并"
+"在翻译后将其读出。"
