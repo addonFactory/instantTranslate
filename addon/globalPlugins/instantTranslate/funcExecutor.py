@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 
 import NVDAObjects
-from scriptHandler import script, executeScript
+from scriptHandler import executeScript
 import keyboardHandler
 
 
@@ -32,9 +32,6 @@ class _FuncExecutor(NVDAObjects.baseObject.ScriptableObject):
 		self.args = args
 		self.kwargs = kwargs
 
-	@script(
-		speakOnDemand=True,
-	)
 	def script_callFunWithOnDemand(self, gesture):
 		return self.f(*self.args, **self.kwargs)
-	
+	script_callFunWithOnDemand.speakOnDemand=True
