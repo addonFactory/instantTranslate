@@ -10,7 +10,7 @@
 from functools import wraps, lru_cache
 from .interface import InstantTranslateSettingsPanel
 from .langslist import g
-from .funcExecutor import executeWithSpeakOnDemand
+from .speechOnDemand import getSpeechOnDemandParameter, executeWithSpeakOnDemand
 from locale import getdefaultlocale
 from time import sleep
 from tones import beep
@@ -66,14 +66,8 @@ confspec = {
 "replaceUnderscores": "boolean(default=false)",
 }
 
-# Define on-demand parameter only if the feature is available.
-try:
-    # NVDA >= 2024.1
-    speech.speech.SpeechMode.onDemand
-    speakOnDemand = {'speakOnDemand': True}
-except AttributeError:
-    # NVDA <= 2023.3
-    speakOnDemand = {}
+# Define speakOnDemand parameter for all scripts needing it
+speakOnDemand = getSpeechOnDemandParameter()
 
 # Below toggle code came from Tyler Spivey's code, with enhancements by Joseph Lee.
 
@@ -265,7 +259,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			shouldTranslate = speech.getState().speechMode != speech.SpeechMode.onDemand
 		except AttributeError:
 			# NVDA <= 2023.3
-			shouldTranslate = False
+			shouldTranslate = True
 		if shouldTranslate:
 			self.script_translateSelection(gesture)
 
