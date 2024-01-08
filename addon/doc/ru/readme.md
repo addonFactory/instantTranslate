@@ -5,71 +5,42 @@
 * Загрузить [стабильную версию][1]
 * Загрузить [разрабатываемую версию][2]
 
-This add-on is used to translate selected and/or clipboard text from one
-language to another.  This is done using the Google Translate service.
+Это дополнение используется для перевода выделенного текста и/или текста в буфере обмена с одного языка на другой.  Для этого используется сервис Google Translate.
 
 ## Настройка языков ##
 Чтобы настроить исходный, целевой и иногда  язык для перемены местами, перейдите: NVDA Меню >> Параметры >> Настройки Instant Translate.
 
-Здесь два комбинированных списка, помеченые "исходный язык" и "Целевой
+Здесь два комбинированных списка, помеченные "исходный язык" и "Целевой
 язык", и флажок для копирования перевода в буфер, если это необходимо.
 
 Кроме того, если вы выбрали автоматическое определение языка (первый выбор)
 в комбинированном списке "исходный язык", есть также комбинированный список
 с названием "Язык для смены местами" и флажок автоматической перемены.
 
-The meaning of two first comboboxes and checkbox for copy is clear, but some
-words about the rest are necessary. Remember always that the explanations
-below assume the source language set on the auto option.
+Смысл двух первых комбинированных списков и флажка для копирования понятен, но стоит сказать несколько слов об остальных. Всегда помните, что объяснения ниже предполагают, что исходный язык установлен на опцию автоматически определять язык.
 
-The "Language for swapping" combobox is useful when you swap via script (see
-below) the source and target language; in fact, a target language set on the
-auto option has no sense, so the addon sets it to value of combobox above.
+Комбинированный список "Язык для замены" полезен, когда вы меняете местами исходный и целевой языки с помощью скрипта (см. ниже) исходный и целевой язык; на самом деле, целевой язык, установленный в опции  автоматически определять язык не имеет смысла, поэтому дополнение устанавливает его в значение предыдущего комбинированного списка.
 
-So, imagine this situation: you usually translate into English (your main
-language), but sometimes (for example, when you write a document) you need
-to translate into Italian (your second language, suppose); you can set
-"Language for swapping" combobox to Italian, so you will translate from
-English to Italian without accessing directly to the addon
-settings. Obviously this function has a major or minor utility according to
-your more frequent needs.
+Итак, представьте себе такую ситуацию: обычно вы переводите на английский (ваш основной язык), но иногда (например, когда вы пишете документ) вам нужно перевести на итальянский (предположим, ваш второй язык); вы можете выбрать итальянский в комбинированном списке   "Язык для замены", и тогда вы будете переводить с английского на итальянский, не обращаясь напрямую к настройкам дополнения. Очевидно, что эта функция имеет большую или меньшую полезность в зависимости от ваших частых потребностей.
 
-Now, the auto-swap checkbox: it appears if and only if you set the auto
-option in "Source language" combobox, and is directly connected with
-"Language for swapping" combobox. If you activate it, then the addon tries
-to commute automatically from your source and target configuration to a
-configuration where target becomes the source language, and language
-selected in "Language for swapping" combobox is the new target language;
-extremely useful if the source language of the text you want translate is
-the target language.
 
-A simple example: take again in mind the situation imagined previously; if
-you translate a text in a language different from English, there is no
-problem, you get the correct translation in English. But if you need to
-translate a text from English, normally you get a translation into English
-identical to original text, and this is a bit useless. Thanks to auto-swap
-function, however, assuming that you want to know how your text sounds into
-Italian, the addon commutes automatically the target language to Italian, so
-it returns a valid translation.
+Теперь о флажке автозамены: он появляется тогда и только тогда, когда вы установили опцию  автоматически определять язык в комбинированном списке "Исходный язык" и напрямую связан с комбинированным списком "Язык для замены". Если вы активируете его, то дополнение попытается автоматически переключиться с вашей конфигурации исходного и целевого языков на конфигурацию, в которой целевым становится язык источника, а язык выбранный в списке "Язык для замены", является новым целевым языком; Очень полезно, если исходным языком текста, который вы хотите перевести, является язык перевода.
 
-Anyway, this is a temporary configuration; if this option has no effect
-(it's experimental), try to commute manually to a stable configuration,
-using the gesture for swapping described below. It's experimental because in
-some situations (with short texts, typically), Google does not recognize the
-real source language correctly, and you have to swap languages manually via
-script, so to force the source language to be the previous target language
-(English in our example).
+Простой пример: вспомним ситуацию, представленную ранее; если вы переводите текст на язык, отличный от английского, то проблем нет, вы получаете правильный перевод на английском. Но если вам нужно перевести текст с английского, то обычно вы получаете перевод на английский, идентичный оригинальному тексту, а это немного бесполезно. Однако благодаря функции автозамены, если предположить, что вы хотите узнать, как звучит ваш текст на итальянском, дополнение автоматически переключает целевой язык на итальянский, поэтому возвращает корректный перевод.
 
-At least, in the speech settings parameters dialog (NVDA Menu >> Preferences >> Speech), you may want to check the "Automatic language switching (when supported)" option. This way, if you are using a multi-lingual synthesizer, the translation will be announced using the target language voice of the synthesizer.
+
+В любом случае, это временная конфигурация; если эта опция не дает эффекта (она экспериментальная), попробуйте переключиться вручную на стабильную конфигурацию, используя жест для переключения, описанный ниже. Экспериментальная, потому что в некоторых ситуациях (как правило, с короткими текстами) Google не распознает настоящий исходный язык правильно, и вам приходится менять языки вручную с помощью скрипта, чтобы заставить исходный язык стал предыдущим целевым языком (в нашем примере - английским).
+
+По крайней мере, в диалоге параметров настройки речи (Меню NVDA >> Параметры >> Речь) вы можете отметить опцию "Автоматическое переключение языков (если поддерживается)". Таким образом, если вы используете многоязычный синтезатор, перевод будет озвучиваться голосом целевого языка синтезатора.
+
 
 ## Использование ##
-You can use this add-on in three ways:
+Вы можете использовать это дополнение тремя способами:
 
-1. Select some text using selection commands (shift with arrow keys, for
-   example) and press associated key to translate. translation result will
-   be read with synthesizer which you are using.
+1. Выделите текст с помощью команд выделения (например, shift +клавиши-стрелки) и нажмите соответствующую клавишу для перевода. Результат перевода будет озвучен синтезатором, который вы используете.
 2. Вы также можете перевести текст из буфера обмена.
-3. Press the dedicated shortcut key to translate the last spoken text.
+3. Нажмите специальную клавишу, чтобы перевести последний произнесённый текст.
+
 
 ## Команды ##
 Все следующие команды клавиш нужно нажимать после клавишного модификатора
@@ -79,33 +50,30 @@ You can use this add-on in three ways:
 * Shift+t: перевести текст из буфера обмена,
 * S: поменять местами исходный и целевой языки,
 * A: объявить текущую конфигурацию,
-* C: скопировать последний результат в буфер обмена,
 * I: определить язык выделенного текста,
-* L: translate the last spoken text,
-* O: open translation settings dialog
-* H: announces all available layered commands.
+* L: перевести последний произнесённый текст,
+* O: открыть диалог настроек перевода
+* H: объявить все доступные многоуровневые команды.
+* C: скопировать последний результат в буфер обмена,
 
-## Changes for 4.4.3 ##
-* Added the ability to replace underscores with spaces, may provide better
-  translation results depending on context (thanks to Beka Gozalishvili)
-* Added compatibility for NVDA 2022.1
+## Изменения в версии 4.4.3 ##
+* Добавлена возможность замены подчёркиваний на пробелы, что может обеспечить лучшие результаты перевода в зависимости от контекста (спасибо Беке Гозалишвили)
+* Добавлена совместимость с NVDA 2022.1
 
-## Changes for 4.4.2 ##
-* Restore language detection and auto-swapping (Thanks to Cyrille for fix)
-* updated languages for translation (thanks to Cyrille)
+## Изменения в версии 4.4.2 ##
+* Восстановлено определение языка и автозамена (спасибо Cyrille за исправление)
+* Обновлены языки для перевода (спасибо Cyrille)
 
-## Changes for 4.4 ##
-* Instant translate is now compatible with NVDA 2019.3 (Python 3 versions of
-  NVDA)
+## Изменения в версии 4.4 ##
+* Instant translate теперь совместим с NVDA 2019.3 и Python версии 3
 
-## Changes for 4.3 ##
-* nvda compatibility fix Now instant translate will be compatible with
-  latest nvda builds.
-* found a way to use google as a translation service again.
+## Изменения в версии 4.3 ##
+* Исправление совместимости с nvda Теперь instant translate будет совместим с последними сборками nvda.
+* Найден способ снова использовать google в качестве сервиса перевода.
 
-## Changes for 4.2 ##
-* Restored working state with newer versions of nvda.
-* Restored automatic language detection.
+## Изменения в версии 4.2 ##
+* Восстановлено рабочее состояние с новыми версиями nvda.
+* Восстановлено автоматическое определение языка.
 
 ## Изменения  в версии 4.1 ##
 * InstantTranslate снова работает со службой переводчика Яндекс вместо
