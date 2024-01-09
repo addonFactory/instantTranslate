@@ -1,8 +1,15 @@
-# Copyright (C) 2023 Cyrille Bougot
+# Copyright (C) 2023-2024 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from speech import speech
+"""A module to manage speak on-demand feature support for add-ons.
+Compatible with NVDA 2019.3 and above.
+"""
+
+import threading
+
+import speech
+import core
 
 
 def isSpeechOnDemandFeatureAvailable():
@@ -44,8 +51,7 @@ def executeWithSpeakOnDemand(f, *args, **kwargs):
 	kwargs: keyword arguments to pass to the function.
 	"""
 
-	import core
-	if not core.isMainThread():
+	if threading.get_ident() != core.mainThreadId:
 		raise RuntimeError('This function should only be executed from the main thread.')
 
 	if not isSpeechOnDemandFeatureAvailable() or speech.getState().speechMode != speech.SpeechMode.onDemand:
