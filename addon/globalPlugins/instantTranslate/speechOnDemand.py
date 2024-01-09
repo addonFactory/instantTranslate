@@ -32,7 +32,6 @@ def getSpeechOnDemandParameter():
 		return {}
 
 
-# Based on a suggestion/prototype of paulber19
 def executeWithSpeakOnDemand(f, *args, **kwargs):
 	"""Allows to execute a function forcing the on-demand mode for its execution.
 	This may be useful for a functions that is scheduled by an on-demand scripts 
