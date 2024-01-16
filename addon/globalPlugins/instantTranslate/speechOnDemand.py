@@ -17,12 +17,12 @@ def isSpeechOnDemandFeatureAvailable():
 	"""
 
 	try:
-	    # NVDA >= 2024.1
-	    speech.SpeechMode.onDemand
-	    return True
+		# NVDA >= 2024.1
+		speech.SpeechMode.onDemand
+		return True
 	except AttributeError:
-	    # NVDA <= 2023.3
-	    return False
+		# NVDA <= 2023.3
+		return False
 
 
 def getSpeechOnDemandParameter():
@@ -31,7 +31,7 @@ def getSpeechOnDemandParameter():
 	Use `**getSpeechOnDemandParameter()` in script decorator's parameters to define `speakOnDemand=True` only
 	for NVDA versions where this feature is supported.
 	"""
-	
+
 	if isSpeechOnDemandFeatureAvailable():
 		# Define on-demand parameter only if the feature is available.
 		return {'speakOnDemand': True}
@@ -41,7 +41,7 @@ def getSpeechOnDemandParameter():
 
 def executeWithSpeakOnDemand(f, *args, **kwargs):
 	"""Allows to execute a function forcing the on-demand mode for its execution.
-	This may be useful for a functions that is scheduled by an on-demand scripts 
+	This may be useful for a functions that is scheduled by an on-demand script
 	to be run after the script execution has finished, e.g. using `core.callLater`.
 	This function should only be called from the main thread.
 
