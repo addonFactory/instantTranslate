@@ -28,9 +28,23 @@ needed_codes = {
 	# Translators: An option to automatically detect source language for translation.
 	"auto":_("Automatically detect language"),
 	# Translators: The name of a language supported by this add-on.
+	"ak": _("Twi (Akan)"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
+	"ay": _("Aymara"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
+	"bho": _("Bhojpuri"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
+	"bm":_("Bambara"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
 	"ceb":_("Cebuano"),
 	# Translators: The name of a language supported by this add-on.
+	"doi": _("Dogri"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
+	"ee": _("Ewe"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
 	"eo":_("Esperanto"),
+	# Translators: The name of a language supported by this add-on.
+	"gom": _("Konkani"),  # Missing, tested on Windows 10 22H2
 	# Translators: The name of a language supported by this add-on.
 	"haw":_("Hawaiian"),
 	# Translators: The name of a language supported by this add-on.
@@ -38,13 +52,27 @@ needed_codes = {
 	# Translators: The name of a language supported by this add-on.
 	"ht":_("Creole Haiti"),
 	# Translators: The name of a language supported by this add-on.
+	"ilo": _("Ilocano"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
 	"jv":_("Javanese"),
+	# Translators: The name of a language supported by this add-on.
+	"kri": _("Krio"),  # Missing, tested on Windows 10 22H2
 	# Translators: The name of a language supported by this add-on.
 	"ku":_("Kurdish"),
 	# Translators: The name of a language supported by this add-on.
 	"la":_("Latin"),
 	# Translators: The name of a language supported by this add-on.
+	"lg":  _("Luganda"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
+	"ln": _("Lingala"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
+	"lus": _("Mizo"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
+	"mai": _("Maithili"),  # Missing, tested on Windows 10 22H2
+	# Translators: The name of a language supported by this add-on.
 	"mg":_("Malagasy"),
+	# Translators: The name of a language supported by this add-on.
+	"mni-Mtei": _("Meiteilon (Manipuri)"),  # Missing, tested on Windows 10 22H2
 	# Translators: The name of a language supported by this add-on.
 	"my":_("Myanmar (Burmese)"),
 	# Translators: The name of a language supported by this add-on.
@@ -70,20 +98,29 @@ needed_codes = {
 langcodes = [
 	"auto",
 	"af",
+	"ak",
 	"am",
 	"ar",
+	"as",
+	"ay",
 	"az",
 	"be",
 	"bg",
+	"bho",
+	"bm",
 	"bn",
 	"bs",
 	"ca",
 	"ceb",
+	"ckb",
 	"co",
 	"cs",
 	"cy",
 	"da",
 	"de",
+	"doi",
+	"dv",
+	"ee",
 	"el",
 	"en",
 	"eo",
@@ -92,11 +129,14 @@ langcodes = [
 	"eu",
 	"fa",
 	"fi",
+	"fil",
 	"fr",
 	"fy",
 	"ga",
 	"gd",
 	"gl",
+	"gn",
+	"gom",
 	"gu",
 	"ha",
 	"haw",
@@ -109,6 +149,7 @@ langcodes = [
 	"hy",
 	"id",
 	"ig",
+	"ilo",
 	"is",
 	"it",
 	"ja",
@@ -118,18 +159,24 @@ langcodes = [
 	"km",
 	"kn",
 	"ko",
+	"kri",
 	"ku",
 	"ky",
 	"la",
 	"lb",
+	"lg",
+	"ln",
 	"lo",
 	"lt",
+	"lus",
 	"lv",
+	"mai",
 	"mg",
 	"mi",
 	"mk",
 	"ml",
 	"mn",
+	"mni-Mtei",
 	"mr",
 	"ms",
 	"mt",
@@ -137,15 +184,19 @@ langcodes = [
 	"ne",
 	"nl",
 	"no",
+	"nso",
 	"ny",
+	"om",
 	"or",
 	"pa",
 	"pl",
 	"ps",
 	"pt",
+	"qu",
 	"ro",
 	"ru",
 	"rw",
+	"sa",
 	"sd",
 	"si",
 	"sk",
@@ -163,9 +214,11 @@ langcodes = [
 	"te",
 	"tg",
 	"th",
+	"ti",
 	"tk",
 	"tl",
 	"tr",
+	"ts",
 	"tt",
 	"ug",
 	"uk",
