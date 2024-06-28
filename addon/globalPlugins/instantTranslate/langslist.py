@@ -11,18 +11,30 @@ import addonHandler
 addonHandler.initTranslation()
 
 def g(code, short=False):
-	"""Return an NVDA language description for code, if one is available. Otherwise, return the one from needed_codes. If that fails, return the code.
+	"""Return a description for the language code passed as parameter. The first found code is returned.
+	The check order is the following:
+	- the code in the forced codes list, i.e. codes for which NVDA/Windows do not return a satisfactory description
+	- the code is in NVDA/Windows language description
+	- the code in the list of needed codes, i.e. codes not available in some versions of Windows
+	If all these checks fail, return the code.
 	If short is True, returns a more compact description for the "auto" special code.
 	"""
 	if short and code == "auto":
 		# Translators: A short description for "Automatically detect language" language choice, reported when
 		# the user requests or swaps the current configuration.
 		return _("Automatic")
+	if code in forced_codes:
+		return forced_codes[code]
 	res = getLanguageDescription(code)
 	if res is not None: return res
 	if code in needed_codes:
 		return needed_codes[code]
 	return code
+
+forced_codes = {
+	# Translators: The name of a language supported by this add-on.
+	"ckb": _("Kurdish (Sorani)"),
+}
 
 needed_codes = {
 	# Translators: An option to automatically detect source language for translation.
