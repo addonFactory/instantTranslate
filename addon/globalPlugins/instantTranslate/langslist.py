@@ -7,6 +7,7 @@
 #See the file COPYING for more details.
 
 from languageHandler import getLanguageDescription
+from logHandler import log
 import addonHandler
 addonHandler.initTranslation()
 
@@ -247,4 +248,9 @@ langcodes = [
 
 langslist = {}
 for code in langcodes:
-	langslist[g(code)] = code
+	name = g(code)
+	try:
+		oldName = langslist[name]
+		log.error(f'Unable to add "{name}" (code "{code}"): this language name already exists for code "{oldName}".')
+	except KeyError:
+		langslist[name] = code
