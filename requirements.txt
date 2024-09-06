@@ -1,0 +1,2 @@
+Markdown==3.7
+SCons==4.8.1
