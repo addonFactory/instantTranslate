@@ -64,7 +64,7 @@ jobs:
         addon_version: ${{ steps.extract_addon_info.outputs.addon_version }}
         channel: ${{ steps.extract_addon_info.outputs.addon_updateChannel }}
         download_url: ${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}
-        token: ${{ secrets.USER_TOKEN }}
+        token: ${{ secrets.REPO_TOKEN }}
 
     - name: Print_issue_number
       run: |
