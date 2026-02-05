@@ -36,9 +36,14 @@ except:
 	from speech import LangChangeCommand
 import braille
 import wx
-import speech
 import speechViewer
-from versionInfo import version_year
+try:
+	# For NVDA 2021.1 and above
+	from speech import speech
+except ImportError:
+	# For NVDA 2020.4 and below
+	import speech
+
 
 _curAddon = addonHandler.getCodeAddon()
 addonName = _curAddon.name.lower()
@@ -53,8 +58,6 @@ elif s.startswith("zh"):
 	lo_lang = s.replace('_', '-')
 else:
 	lo_lang = s[0:s.find("_")]
-
-speechModule = speech.speech if version_year>=2021 else speech
 
 confspec = {
 "from": "string(default=auto)",
@@ -112,8 +115,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.lastTranslation = None
 		InstantTranslateSettingsPanel.addonConf = self.addonConf
 		gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(InstantTranslateSettingsPanel)
-		self._speak = speechModule.speak
-		speechModule.speak = self._localSpeak
+		self._speak = speech.speak
+		speech.speak = self._localSpeak
 		self.lastSpokenText = ''
 		self.settings = {"lang_from": "from", "lang_to": "into", "lang_swap": "swap", "copyTranslation": "copytranslatedtext", "autoSwap": "autoswap", "isAutoSwapped": "isautoswapped", "replaceUnderscores": "replaceUnderscores", "useMirror": "useMirror"}
 		[setattr(self.__class__, propertyMethod, property(lambda self, propertyName=propertyName: self.addonConf[propertyName], lambda self, value, propertyName=propertyName: self.addonConf.__setitem__(propertyName, value))) for propertyMethod, propertyName in self.settings.items()]
@@ -150,7 +153,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def terminate(self):
 		gui.settingsDialogs.NVDASettingsDialog.categoryClasses.remove(InstantTranslateSettingsPanel)
-		speechModule.speak = self._speak
+		speech.speak = self._speak
 
 	@scriptHandler.script(
 		# Translators: message presented in input help mode, when user presses the shortcut keys for this addon.
