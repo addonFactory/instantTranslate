@@ -11,7 +11,7 @@ from functools import wraps, lru_cache
 from .interface import InstantTranslateSettingsPanel
 from .langslist import g
 from .speechOnDemand import getSpeechOnDemandParameter, executeWithSpeakOnDemand
-from locale import getdefaultlocale
+from locale import getlocale
 from time import sleep
 from tones import beep
 from .translator import Translator
@@ -50,18 +50,18 @@ addonName = _curAddon.name.lower()
 _addonSummary = _curAddon.manifest['summary']
 addonHandler.initTranslation()
 
-lo_lang = getdefaultlocale()
-s = lo_lang[0]
-if s == "zh_HK":
-	lo_lang = "zh-TW"
-elif s.startswith("zh"):
-	lo_lang = s.replace('_', '-')
-else:
-	lo_lang = s[0:s.find("_")]
+def getLocaleLanguage():
+	lang, _unused = getlocale()
+	if lang == "zh_HK":
+		return "zh-TW"
+	elif lang.startswith("zh"):
+		return lang.replace('_', '-')
+	else:
+		return lang.split("_")[0]
 
 confspec = {
 "from": "string(default=auto)",
-"into": f"string(default={lo_lang})",
+"into": f"string(default={getLocaleLanguage()})",
 "swap": "string(default=en)",
 "copytranslatedtext": "boolean(default=true)",
 "autoswap": "boolean(default=true)",
