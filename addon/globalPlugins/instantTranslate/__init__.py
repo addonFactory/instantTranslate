@@ -370,7 +370,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		description=_("Opens Instant Translate settings dialog."),
 	)
 	def script_showSettings(self, gesture):
-		wx.CallAfter(gui.mainFrame._popupSettingsDialog, gui.settingsDialogs.NVDASettingsDialog, InstantTranslateSettingsPanel)
+		try:
+			# NVDA version >= 2023.2
+			popupSettingsDialog = gui.mainFrame.popupSettingsDialog
+		except:
+			# NVDA version < 2023.2
+			popupSettingsDialog = gui.mainFrame._popupSettingsDialog
+		wx.CallAfter(popupSettingsDialog, gui.settingsDialogs.NVDASettingsDialog, InstantTranslateSettingsPanel)
 
 	@scriptHandler.script(
 		# Translators: Presented in input help mode.
