@@ -38,7 +38,7 @@ import braille
 import wx
 import speech
 import speechViewer
-from versionInfo import version_year
+from buildVersion import version_year
 
 _curAddon = addonHandler.getCodeAddon()
 addonName = _curAddon.name.lower()
