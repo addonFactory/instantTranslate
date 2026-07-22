@@ -6,32 +6,26 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 'Instant-Translate' '2.1'\n"
-"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2013-02-09 18:30+0100\n"
-"PO-Revision-Date: 2024-09-06 11:22+0200\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2026-07-22 08:07+0200\n"
+"PO-Revision-Date: 2026-07-22 08:30+0200\n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 
+#: addon\globalPlugins\instantTranslate\__init__.py:142
 msgid ""
-"Instant Translate layer commands. t translates selected text, shift+t "
-"translates clipboard text, a announces current swap configuration, s swaps "
-"source and target languages, c copies last result to clipboard, i identify "
-"the language of selected text, l translates last spoken text, o opens "
-"translation setting dialog."
+"Instant Translate layer commands. Then press h to list available commands."
 msgstr ""
-"Befehle für die sofortige Übersetzung. T übersetzt den markierten Text, "
-"Umschalt+T übersetzt den Text aus der Zwischenablage, A sagt die aktuelle "
-"Konfiguration zum Umtausch an, S tauscht Ausgangs- und Zielsprache, C "
-"kopiert das letzte Ergebnis in die Zwischenablage, I identifiziert die "
-"Sprache des markierten Textes, L übersetzt den zuletzt vorgelesenen Text, O "
-"öffnet die Einstellungen der Übersetzung."
+"Befehlsebene für Sofortübersetzer, drücken Sie dann h, um die verfügbaren "
+"Befehle aufzulisten."
 
 #. Translators: message presented in input help mode, when user presses the shortcut keys for this addon.
+#: addon\globalPlugins\instantTranslate\__init__.py:160
 msgid ""
 "Translates clipboard text from one language to another using Google "
 "Translate."
@@ -40,10 +34,12 @@ msgstr ""
 "einer Sprache in eine andere."
 
 #. Translators: message presented when user presses the shortcut key for translating clipboard text but the clipboard is empty.
+#: addon\globalPlugins\instantTranslate\__init__.py:170
 msgid "There is no text on the clipboard"
 msgstr "Es befindet sich kein Text in der Zwischenablage"
 
 #. Translators: message presented in input help mode, when user presses the shortcut keys for this addon.
+#: addon\globalPlugins\instantTranslate\__init__.py:185
 msgid ""
 "Translates selected text from one language to another using Google Translate."
 msgstr ""
@@ -51,84 +47,121 @@ msgstr ""
 "Sprache in eine andere."
 
 #. Translators: user has pressed the shortcut key for translating selected text, but no text was actually selected.
+#: addon\globalPlugins\instantTranslate\__init__.py:192
+#: addon\globalPlugins\instantTranslate\__init__.py:310
 msgid "no selection"
 msgstr "Keine Auswahl"
 
+#: addon\globalPlugins\instantTranslate\__init__.py:240
 msgid "Translation failed"
 msgstr "Übersetzung fehlgeschlagen"
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:255
 msgid "It swaps source and target languages."
 msgstr "Vertauscht Ausgangs- und Zielsprache."
 
 #. Translators: message presented to announce that the source and target languages have been swapped.
+#: addon\globalPlugins\instantTranslate\__init__.py:267
 msgid "Languages swapped"
 msgstr "Sprachen vertauscht"
 
 #. Translators: message presented to announce the current source and target languages.
+#: addon\globalPlugins\instantTranslate\__init__.py:269
+#: addon\globalPlugins\instantTranslate\__init__.py:286
 #, python-brace-format
 msgid "Translate: from {lang1} to {lang2}"
 msgstr "Übersetze: von {lang1} nach {lang2}"
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:281
 msgid "It announces the current source and target languages."
 msgstr "Sagt die Ausgangs- sowie die Zielsprache an."
 
 #. Translators: message presented to announce a successful copy
+#: addon\globalPlugins\instantTranslate\__init__.py:294
 msgid "Last translation copied in clipboard"
 msgstr "Letzte Übersetzung in die Zwischenablage kopiert"
 
 #. Translators: message presented to announce no previous translation disponibility
+#: addon\globalPlugins\instantTranslate\__init__.py:297
 msgid "No stored translation"
 msgstr "Keine gespeicherte Übersetzung"
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:299
 msgid "It copies the last translation to clipboard"
 msgstr "Kopiert die letzte Übersetzung in die Zwischenablage"
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:303
 msgid "It identifies the language of selected text"
 msgstr "Identifiziert die Sprache des markierten Textes"
 
+#: addon\globalPlugins\instantTranslate\__init__.py:313
 msgid "Language is..."
 msgstr "Sprache ist..."
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:353
 msgid "It translates the last spoken text"
 msgstr "Übersetzt den zuletzt vorgelesenen Text"
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:362
 msgid "Announces all available layered commands"
 msgstr "Listet alle verfügbaren Befehle auf"
 
+#: addon\globalPlugins\instantTranslate\__init__.py:366
 msgid ""
 "t translates selected text, shift+t translates clipboard text, a announces "
 "current swap configuration, s swaps source and target languages, c copies "
 "last result to clipboard, i identify the language of selected text, l "
-"translates last spoken text, o open translation settings dialog, h displays "
-"this message."
+"translates last spoken text, o open translation settings dialog, v toggles "
+"automatic translation, h displays this message."
 msgstr ""
-"T übersetzt den markierten Text, Umschalt+t übersetzt den Text aus der "
-"Zwischenablage, A sagt die aktuelle Konfiguration zum Umtausch an, S tauscht "
-"die Ausgangs- und Zielsprache, C kopiert das letzte Ergebnis in die "
-"Zwischenablage, I identifiziert die Sprache des markierten Textes, L "
-"übersetzt den zuletzt vorgelesenen Text, O öffnet die Einstellungen der "
-"Übersetzung, H zeigt diese Hilfe an."
+"t übersetzt ausgewählten Text, Umschalt+T übersetzt Text aus der "
+"Zwischenablage, a kündigt die aktuelle Austauschkonfiguration an, s tauscht "
+"Quell- und Zielsprache aus, c kopiert das letzte Ergebnis in die "
+"Zwischenablage, i identifiziert die Sprache des ausgewählten Textes, l "
+"übersetzt den zuletzt gesprochenen Text, o öffnet den Dialog mit den "
+"Übersetzungseinstellungen, v schaltet die automatische Übersetzung ein, h "
+"zeigt diese Meldung an."
 
 #. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:370
 msgid "Opens Instant Translate settings dialog."
 msgstr "Öffnet die Einstellungen für die Sofort-Übersetzung."
 
+#. Translators: Presented in input help mode.
+#: addon\globalPlugins\instantTranslate\__init__.py:383
+msgid "Toggle automatic translation of speech output."
+msgstr "Automatische Übersetzung der Sprachausgabe umschalten."
+
+#. Translators: message presented to announce that automatic translation is enabled.
+#: addon\globalPlugins\instantTranslate\__init__.py:389
+msgid "Automatic translation enabled"
+msgstr "Automatische Übersetzung aktiviert"
+
+#. Translators: message presented to announce that automatic translation is disabled.
+#: addon\globalPlugins\instantTranslate\__init__.py:392
+msgid "Automatic translation disabled"
+msgstr "Automatische Übersetzung deaktiviert"
+
+#: addon\globalPlugins\instantTranslate\donate_dialog.py:30
 msgid "Donate via Paypal"
 msgstr "Über PayPal spenden"
 
+#: addon\globalPlugins\instantTranslate\donate_dialog.py:31
 msgid "Donate via Yoomoney"
 msgstr "Über YooMoney (früher Yandex.Money) spenden"
 
+#: addon\globalPlugins\instantTranslate\donate_dialog.py:46
 #, python-brace-format
 msgid "Request for contributions to {name}"
 msgstr "Bitte um Beiträge an {name}"
 
+#: addon\globalPlugins\instantTranslate\donate_dialog.py:47
 #, python-brace-format
 msgid ""
 "{name} is a free add-on for NVDA.\n"
@@ -145,28 +178,32 @@ msgstr ""
 "eine Spende durchführen können"
 
 #. Translators: name of the dialog.
-#. Add-on summary, usually the user visible name of the addon.
-#. Translators: Summary for this add-on to be shown on installation and add-on information.
+#: addon\globalPlugins\instantTranslate\interface.py:23
 msgid "Instant Translate"
 msgstr "Sofortübersetzung"
 
 #. Translators: Help message for a dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:29
 msgid "Select translation source and target language:"
 msgstr "Auswahl der Übersetzung für Ausgangs- und Zielsprache:"
 
 #. Translators: A setting in addon settings dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:33
 msgid "Source language:"
 msgstr "Ausgangssprache:"
 
 #. Translators: A setting in addon settings dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:42
 msgid "Target language:"
 msgstr "Zielsprache:"
 
 #. Translators: A setting in addon settings dialog, shown if source language is on auto.
+#: addon\globalPlugins\instantTranslate\interface.py:48
 msgid "Language for swapping:"
 msgstr "Sprachenaustausch:"
 
 #. Translators: A setting in addon settings dialog, shown if source language is on auto.
+#: addon\globalPlugins\instantTranslate\interface.py:53
 msgid ""
 "Activate the auto-swap if recognized source is equal to the target "
 "(experimental)"
@@ -175,194 +212,249 @@ msgstr ""
 "gleich sind (experimentell)"
 
 #. Translators: A setting in addon settings dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:57
 msgid "Copy translation result to clipboard"
 msgstr "Ergebnis der Übersetzung in die Zwischenablage kopieren"
 
 #. Translators: A setting in addon settings dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:61
 msgid ""
 "Replace underscores with spaces (May provide better translation results "
 "depending on context)"
 msgstr ""
-"Unterstriche durch Leerzeichen ersetzen (ergibt evtl. bessere Ergebnisse je "
-"nach Kontext)"
+"Ersetzt Unterstriche durch Leerzeichen (kann je nach Kontext zu besseren "
+"Übersetzungsergebnissen führen)"
 
 #. Translators: A setting in addon settings dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:64
 msgid "Use mirror (Mainly for chinese users)"
 msgstr "Mirror verwenden (hauptsächlich für chinesische Benutzer)"
 
 #. Translators: A setting in addon settings dialog.
+#: addon\globalPlugins\instantTranslate\interface.py:67
 msgid "Support an author..."
 msgstr "Den Autor unterstützen..."
 
 #. Translators: A short description for "Automatically detect language" language choice, reported when
 #. the user requests or swaps the current configuration.
+#: addon\globalPlugins\instantTranslate\langslist.py:26
 msgid "Automatic"
 msgstr "Automatisch"
 
 #. Translators: The name of a language supported by this add-on.
-#, fuzzy
+#: addon\globalPlugins\instantTranslate\langslist.py:37
 msgid "Kurdish (Sorani)"
-msgstr "Kurdisch"
+msgstr "Kurdisch (Sorani)"
 
 #. Translators: An option to automatically detect source language for translation.
+#: addon\globalPlugins\instantTranslate\langslist.py:42
 msgid "Automatically detect language"
 msgstr "Sprache automatisch erkennen"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:44
 msgid "Twi (Akan)"
 msgstr "Twi (Akan)"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:46
 msgid "Aymara"
 msgstr "Aymara"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:48
 msgid "Bhojpuri"
 msgstr "Bhojpuri"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:50
 msgid "Bambara"
 msgstr "Bambara"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:52
 msgid "Cebuano"
 msgstr "Cebuano"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:54
 msgid "Dogri"
 msgstr "Dogri"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:56
 msgid "Ewe"
 msgstr "Ewe"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:58
 msgid "Esperanto"
 msgstr "Esperanto (Spanisch)"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:60
 msgid "Konkani"
 msgstr "Konkani"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:62
 msgid "Hawaiian"
 msgstr "Hawaiisch"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:64
 msgid "Hmong"
 msgstr "Hmong"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:66
 msgid "Creole Haiti"
 msgstr "Creole Haiti"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:68
 msgid "Ilocano"
 msgstr "Ilocano"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:70
 msgid "Javanese"
 msgstr "Javanisch"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:72
 msgid "Krio"
 msgstr "Krio"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:74
 msgid "Kurdish"
 msgstr "Kurdisch"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:76
 msgid "Latin"
 msgstr "Latein"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:78
 msgid "Luganda"
 msgstr "Luganda"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:80
 msgid "Lingala"
 msgstr "Lingala"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:82
 msgid "Mizo"
 msgstr "Mizo"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:84
 msgid "Maithili"
 msgstr "Maithili"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:86
 msgid "Malagasy"
 msgstr "Malagasy"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:88
 msgid "Meiteilon (Manipuri)"
 msgstr "Meiteilon (Manipuri)"
 
 #. Missing, tested on Windows 10 22H2
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:90
 msgid "Myanmar (Burmese)"
 msgstr "Burmesisch )Myanmar)"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:92
 msgid "Chichewa"
 msgstr "Chichewa"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:94
 msgid "Sindhi"
 msgstr "Sindhi"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:96
 msgid "Samoan"
 msgstr "Samoanisch"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:98
 msgid "Shona"
 msgstr "Shona"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:100
 msgid "Somali"
 msgstr "Somali"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:102
 msgid "Sesotho"
 msgstr "Sesotho"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:104
 msgid "Sundanese"
 msgstr "Sundanese"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:106
 msgid "Tagalog"
 msgstr "Tagalog"
 
 #. Translators: The name of a language supported by this add-on.
+#: addon\globalPlugins\instantTranslate\langslist.py:108
 msgid "Yiddish"
 msgstr "Jiddisch"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#: buildVars.py:24
 msgid ""
 "This addon translates selected or clipboard text using the Google Translate "
 "service and presents it."
 msgstr ""
 "Diese Erweiterung verwendet den Google Übersetzungsdienst, um den markierten "
 "Text bzw. den Inhalt der Zwischenablage zu übersetzen und die Übersetzung "
-"auszugeben."
+"auszugeben.\n"
+"Vom Projekt \"NVDA Nachhaltig\" mit übersetzt."
+
+#~ msgid ""
+#~ "Instant Translate layer commands. t translates selected text, shift+t "
+#~ "translates clipboard text, a announces current swap configuration, s "
+#~ "swaps source and target languages, c copies last result to clipboard, i "
+#~ "identify the language of selected text, l translates last spoken text, o "
+#~ "opens translation setting dialog."
+#~ msgstr ""
+#~ "Befehle für die sofortige Übersetzung. T übersetzt den markierten Text, "
+#~ "Umschalt+T übersetzt den Text aus der Zwischenablage, A sagt die aktuelle "
+#~ "Konfiguration zum Umtausch an, S tauscht Ausgangs- und Zielsprache, C "
+#~ "kopiert das letzte Ergebnis in die Zwischenablage, I identifiziert die "
+#~ "Sprache des markierten Textes, L übersetzt den zuletzt vorgelesenen Text, "
+#~ "O öffnet die Einstellungen der Übersetzung."
 
 #~ msgid "unavailable"
 #~ msgstr "nicht verfügbar"

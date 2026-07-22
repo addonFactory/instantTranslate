@@ -163,6 +163,9 @@ Alle folgenden Befehle müssen nach der zuvor gedrückten Modifikationstaste
 ## Änderungen in 1.0 ##
 * Erste Version.
 
+## Übersetzung 
+Das Projekt "NVDA Nachhaltig" hat bei der Übersetzung mitgewirkt.
+
 
 [[!tag dev stable]]
 
