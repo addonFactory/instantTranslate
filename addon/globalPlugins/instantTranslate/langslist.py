@@ -12,7 +12,7 @@ from languageHandler import getLanguageDescription
 from logHandler import log
 import addonHandler
 
-from .googleTranslator import languageCache
+from .translators.google import languageCache
 
 addonHandler.initTranslation()
 
@@ -255,10 +255,10 @@ SOURCE_ONLY_CODES = frozenset(["auto"])
 TARGET_ONLY_CODES = frozenset(["zh-TW"])
 
 
-def getLanguages(kind):
+def getLanguages(kind, cache=None):
 	if kind not in ("source", "target"):
 		raise ValueError('kind has to be "source" or "target", got %r' % (kind,))
-	languages = languageCache.get()
+	languages = cache.get() if cache is not None else None
 	codes = languages.get(kind) if languages else None
 	if not codes:
 		excluded = TARGET_ONLY_CODES if kind == "source" else SOURCE_ONLY_CODES
@@ -268,10 +268,10 @@ def getLanguages(kind):
 
 def _byName(codes):
 	byName = {}
-	for code, backEndName in codes.items():
+	for code, reportedName in codes.items():
 		name = g(code)
-		if name == code and backEndName:
-			name = backEndName
+		if name == code and reportedName:
+			name = reportedName
 		if name in byName:
 			log.error(
 				'Unable to add "%s" (code "%s"): this language name already exists for code "%s".'
@@ -288,7 +288,7 @@ def getLanguageName(code, short=False):
 		return name
 	languages = languageCache.get(refresh=False) or {}
 	for kind in ("target", "source"):
-		backEndName = (languages.get(kind) or {}).get(code)
-		if backEndName:
-			return backEndName
+		reportedName = (languages.get(kind) or {}).get(code)
+		if reportedName:
+			return reportedName
 	return code

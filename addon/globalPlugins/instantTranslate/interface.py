@@ -12,6 +12,7 @@ import gui.guiHelper
 from gui.settingsDialogs import SettingsPanel
 from .langslist import g, getLanguages
 from .languagePairs import MAX_PAIRS, LanguagePair, formatPairs, parsePairs, slotLabel
+from .providers import PROVIDERS, getProvider
 import addonHandler
 
 addonHandler.initTranslation()
@@ -20,6 +21,15 @@ addonHandler.initTranslation()
 def sourceChoices(sourceLangs):
 	auto = g("auto")
 	return [auto] + [name for name in sourceLangs if name != auto]
+
+
+def providerLanguages(providerId):
+	cache = getProvider(providerId).languageCache
+	return getLanguages("source", cache), getLanguages("target", cache)
+
+
+def chosenCode(choice, languages, default):
+	return languages.get(choice.GetStringSelection(), default)
 
 
 def getName(languages, code):
@@ -35,13 +45,20 @@ class InstantTranslateSettingsPanel(SettingsPanel):
 
 	def makeSettings(self, sizer):
 		helper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
-		self.sourceLangs = getLanguages("source")
-		self.targetLangs = getLanguages("target")
+		self.provider = self.addonConf['provider']
+		self.sourceLangs, self.targetLangs = providerLanguages(self.provider)
 		self.languagePairs = parsePairs(self.addonConf['pairs'])
 
 		# Translators: Help message for a dialog.
 		helpLabel = wx.StaticText(self, label=_("Select translation source and target language:"))
 		sizer.Add(helpLabel)
+
+		# Translators: A setting in addon settings dialog, selecting the translation service to use.
+		self._providerChoice = helper.addLabeledControl(
+			_("Translation service:"), wx.Choice, choices=[provider.providerName for provider in PROVIDERS.values()]
+		)
+		self._providerChoice.Select(max(0, list(PROVIDERS).index(self.provider) if self.provider in PROVIDERS else 0))
+		self._providerChoice.Bind(wx.EVT_CHOICE, self.onProviderSelect)
 
 		# Translators: A setting in addon settings dialog.
 		fromLabelText = _("Source language:")
@@ -73,6 +90,10 @@ class InstantTranslateSettingsPanel(SettingsPanel):
 		self.progressBeepsChk = helper.addItem(wx.CheckBox(self, label=_("Beep while a translation is in progress")))
 		self.progressBeepsChk.SetValue(self.addonConf['progressbeeps'])
 
+		# Translators: A setting in addon settings dialog.
+		self.announceStartChk = helper.addItem(wx.CheckBox(self, label=_("Announce when a translation starts")))
+		self.announceStartChk.SetValue(self.addonConf['announcestart'])
+
 		# Translators: A button in addon settings dialog, opening the language pairs dialog.
 		self.pairsBtn = helper.addItem(wx.Button(self, label=_("Language &pairs...")))
 		self.pairsBtn.Bind(wx.EVT_BUTTON, self.onLanguagePairs)
@@ -87,9 +108,7 @@ class InstantTranslateSettingsPanel(SettingsPanel):
 		self._fromChoice.Select(iLang_from)
 		self._intoChoice.Select(iLang_to)
 		self._swapChoice.Select(iLang_swap)
-		if iLang_from != 0:
-			self._swapChoice.Disable()
-			self.autoSwapChk.Disable()
+		self.updateSwapControls()
 
 	def postInit(self):
 		self._fromChoice.SetFocus()
@@ -107,13 +126,35 @@ class InstantTranslateSettingsPanel(SettingsPanel):
 			dialog.Destroy()
 		self.pairsBtn.SetFocus()
 
+	def onProviderSelect(self, event):
+		self.provider = list(PROVIDERS)[self._providerChoice.GetSelection()]
+		self.reloadLanguages()
+
+	def reloadLanguages(self):
+		chosen = [
+			chosenCode(self._fromChoice, self.sourceLangs, self.addonConf['from']),
+			chosenCode(self._intoChoice, self.targetLangs, self.addonConf['into']),
+			chosenCode(self._swapChoice, self.targetLangs, self.addonConf['swap']),
+		]
+		self.sourceLangs, self.targetLangs = providerLanguages(self.provider)
+		self._fromChoice.Set(sourceChoices(self.sourceLangs))
+		self._intoChoice.Set(list(self.targetLangs))
+		self._swapChoice.Set(list(self.targetLangs))
+		for choice, languages, code in zip(
+			(self._fromChoice, self._intoChoice, self._swapChoice),
+			(self.sourceLangs, self.targetLangs, self.targetLangs),
+			chosen,
+		):
+			choice.Select(max(0, choice.FindString(getName(languages, code))))
+		self.updateSwapControls()
+
+	def updateSwapControls(self):
+		isAuto = self._fromChoice.GetStringSelection() == g("auto")
+		self._swapChoice.Enable(isAuto)
+		self.autoSwapChk.Enable(isAuto)
+
 	def onFromSelect(self, event):
-		if event.GetString() == g("auto"):
-			self._swapChoice.Enable()
-			self.autoSwapChk.Enable()
-		else:
-			self._swapChoice.Disable()
-			self.autoSwapChk.Disable()
+		self.updateSwapControls()
 
 	def onSave(self):
 		self.addonConf['from'] = self.sourceLangs[self._fromChoice.GetStringSelection()]
@@ -123,6 +164,8 @@ class InstantTranslateSettingsPanel(SettingsPanel):
 		self.addonConf['autoswap'] = self.autoSwapChk.GetValue()
 		self.addonConf['replaceUnderscores'] = self.replaceUnderscores.GetValue()
 		self.addonConf['progressbeeps'] = self.progressBeepsChk.GetValue()
+		self.addonConf['announcestart'] = self.announceStartChk.GetValue()
+		self.addonConf['provider'] = self.provider
 		self.addonConf['pairs'] = formatPairs(self.languagePairs)
 
 	def getName(self, languages, code):

@@ -2,10 +2,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import addonHandler
 import languageHandler
 
-from . import httpClient
-from .baseTranslator import BaseTranslator, LanguageCache, cachePath
+from .. import httpClient
+from .base import BaseTranslator, LanguageCache, cachePath
 
 API_KEY = "AIzaSyDLEeFI5OtFBwYBIoK_jj5m32rZK5CkCXA"
 CLIENT_NAME = "gtx"
@@ -16,9 +17,13 @@ HEADERS = {"Content-Type": "application/json+protobuf"}
 LANGUAGES_TTL = 86400
 LANGUAGES_FILE = "gt_langs.json"
 
+addonHandler.initTranslation()
 
-class GoogleTranslator(BaseTranslator):
-	backEndName = "Google Translate"
+
+class Google(BaseTranslator):
+	# Translators: the name of a translation service, presented when switching between services.
+	providerName = _("Google Translate")
+	headers = HEADERS
 	maxChunkSize = 12000
 
 	def translateChunk(self, chunk, langTo):
@@ -31,7 +36,7 @@ class GoogleTranslator(BaseTranslator):
 			("key", API_KEY),
 		]
 		params += [("data_types", dataType) for dataType in DATA_TYPES]
-		response = self.session.get(TRANSLATE_URL, params=params, headers=HEADERS).json()
+		response = self.session.get(TRANSLATE_URL, params=params).json()
 		sentences = response[1] if len(response) > 1 else None
 		if sentences:
 			translation = "".join(sentence[0] for sentence in sentences if sentence and sentence[0])
@@ -72,3 +77,5 @@ languageCache = LanguageCache(
 	fetch=fetchLanguages,
 	getContext=displayLanguage,
 )
+
+Google.languageCache = languageCache

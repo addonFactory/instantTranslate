@@ -15,7 +15,8 @@ from .langslist import getLanguageName
 from .speechOnDemand import getSpeechOnDemandParameter, executeWithSpeakOnDemand
 from locale import getlocale
 from tones import beep
-from .googleTranslator import GoogleTranslator, languageCache
+from .translators.google import languageCache
+from .providers import getProvider, nextProvider
 from .languagePairs import MAX_PAIRS, PAIR_KEYS, parsePairs
 import addonHandler
 import api
@@ -72,6 +73,8 @@ confspec = {
 "replaceUnderscores": "boolean(default=false)",
 "progressbeeps": "boolean(default=true)",
 "pairs": "string_list(default=list())",
+"provider": "string(default=google)",
+"announcestart": "boolean(default=true)",
 }
 
 
@@ -198,6 +201,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	replaceUnderscores = ConfigOption("replaceUnderscores")
 	progressBeeps = ConfigOption("progressbeeps")
 	configuredPairs = ConfigOption("pairs")
+	provider = ConfigOption("provider")
+	announceStart = ConfigOption("announcestart")
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -271,7 +276,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@layerScript(
 		"shift+t",
 		# Translators: Description of a layer command, presented in input help mode and in the command list.
-		description=_("Translates the clipboard text from one language to another using Google Translate."),
+		description=_("Translates the clipboard text from one language to another."),
 		**speakOnDemand,
 	)
 	def script_translateClipboardText(self, gesture):
@@ -297,7 +302,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@layerScript(
 		"t",
 		# Translators: Description of a layer command, presented in input help mode and in the command list.
-		description=_("Translates the selected text from one language to another using Google Translate."),
+		description=_("Translates the selected text from one language to another."),
 		**speakOnDemand,
 	)
 	def script_translateSelection(self, gesture):
@@ -315,14 +320,16 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			langSwap = self.lang_swap
 		else:
 			langSwap = None
-		key = (text, langFrom, langTo, langSwap)
+		key = (self.provider, text, langFrom, langTo, langSwap)
 		cached = self.cacheLookup(key)
 		if cached is not None:
 			self.announceTranslation(cached)
 			return
-		# Translators: message presented when a translation has been requested and its result is awaited.
-		ui.message(_("Translation started, please wait"))
-		self.startTranslator(GoogleTranslator(
+		if self.announceStart:
+			# Translators: message presented when a translation has been requested and its result is
+			# awaited, unless the corresponding setting has been unchecked.
+			ui.message(_("Translation started, please wait"))
+		self.startTranslator(self.translatorClass(
 			langFrom,
 			langTo,
 			text,
@@ -352,11 +359,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# useful for yandex, that doesn't support auto option
 #		if langFrom == "auto":
 #			langFrom = detect_language(text)
-		key = (text, langFrom, langTo, langSwap)
+		key = (self.provider, text, langFrom, langTo, langSwap)
 		cached = self.cacheLookup(key)
 		if cached is not None:
 			return cached
-		myTranslator = self.startTranslator(GoogleTranslator(langFrom, langTo, text, langSwap))
+		myTranslator = self.startTranslator(self.translatorClass(langFrom, langTo, text, langSwap))
 		myTranslator.join()
 		if myTranslator.shouldStop:
 			raise RuntimeError('Translation stopped')
@@ -447,6 +454,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# Translators: message presented to announce that the source and target languages have been swapped.
 		ui.message(_("Languages swapped"))
 		self.announceLanguages()
+		self.translateSelectionUnlessOnDemand(gesture)
+
+	def translateSelectionUnlessOnDemand(self, gesture):
 		try:
 			# NVDA 2024.1+
 			shouldTranslate = speech.getState().speechMode != speech.SpeechMode.onDemand
@@ -466,23 +476,42 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		)
 
 	@property
+	def translatorClass(self):
+		return getProvider(self.provider)
+
+	@property
 	def languagePairs(self):
 		return parsePairs(self.configuredPairs)
 
-	def useLanguagePair(self, slot):
+	def useLanguagePair(self, slot, gesture):
 		pairs = self.languagePairs
 		if slot >= len(pairs):
 			ui.message(
-				# Translators: message presented when the user switches to a slot holding no language
-				# pair yet. {slot} is the number of that slot, from 1 to 10.
+				# Translators: message presented when the user switches to a slot holding no language pair yet. {slot} is the number of that slot, from 1 to 10.
 				_("No language pair in slot {slot}").format(slot=slot + 1)
 			)
 			return
 		pair = pairs[slot]
 		self.lang_from, self.lang_to = pair.langFrom, pair.langTo
-		# The pair sets both languages explicitly, so any pending automatic swap no longer applies.
 		self.isAutoSwapped = False
 		self.announceLanguages()
+		self.translateSelectionUnlessOnDemand(gesture)
+
+	@layerScript(
+		"n",
+		# Translators: Description of a layer command, presented in input help mode and in the command list.
+		description=_("Switches to the next translation service."),
+		**speakOnDemand,
+	)
+	def script_nextProvider(self, gesture):
+		self.provider = nextProvider(self.provider)
+		self.announceProvider()
+
+	def announceProvider(self):
+		ui.message(
+			# Translators: message presented when switching to another translation service.
+			_("Using service: {provider}").format(provider=self.translatorClass.providerName)
+		)
 
 	@layerScript(
 		"a",
@@ -520,7 +549,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			ui.message(_("no selection"))
 			return
 		ui.message(_("Language is..."))
-		self.startTranslator(GoogleTranslator(
+		self.startTranslator(self.translatorClass(
 			"auto",
 			self.lang_to,
 			text,
@@ -669,7 +698,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 def makeLanguagePairScript(slot):
 	def script(self, gesture):
-		self.useLanguagePair(slot)
+		self.useLanguagePair(slot, gesture)
 
 	script.__name__ = "%suseLanguagePair%d" % (SCRIPT_PREFIX, slot + 1)
 	return layerScript(

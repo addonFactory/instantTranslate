@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import json
+import json as jsonLib
 import socket
 import threading
 from urllib.parse import urlencode
@@ -57,7 +57,7 @@ class Response:
 		return self.read().decode(encoding)
 
 	def json(self):
-		return json.loads(self.text())
+		return jsonLib.loads(self.text())
 
 	def close(self):
 		try:
@@ -101,10 +101,20 @@ class Session:
 			return self._closed
 
 	def get(self, url, params=None, headers=None, timeout=None):
+		return self.request(url, params=params, headers=headers, timeout=timeout)
+
+	def post(self, url, json=None, params=None, headers=None, timeout=None):
+		body = None if json is None else jsonLib.dumps(json).encode("utf-8")
+		allHeaders = {"Content-Type": "application/json"}
+		if headers:
+			allHeaders.update(headers)
+		return self.request(url, data=body, params=params, headers=allHeaders, timeout=timeout)
+
+	def request(self, url, data=None, params=None, headers=None, timeout=None):
 		allHeaders = dict(self.headers)
 		if headers:
 			allHeaders.update(headers)
-		request = urllibRequest.Request(buildUrl(url, params), headers=allHeaders)
+		request = urllibRequest.Request(buildUrl(url, params), data=data, headers=allHeaders)
 		self._raiseIfClosed()
 		raw = urllibRequest.urlopen(request, timeout=self.timeout if timeout is None else timeout)
 		response = Response(raw, onClose=self._forget)
@@ -144,3 +154,7 @@ class Session:
 
 def get(url, params=None, headers=None, timeout=DEFAULT_TIMEOUT):
 	return Session(timeout=timeout).get(url, params=params, headers=headers)
+
+
+def post(url, json=None, params=None, headers=None, timeout=DEFAULT_TIMEOUT):
+	return Session(timeout=timeout).post(url, json=json, params=params, headers=headers)
