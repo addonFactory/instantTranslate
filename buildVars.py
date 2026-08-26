@@ -23,7 +23,7 @@ addon_info = {
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
 	"addon_description": _("""This addon translates selected or clipboard text using Translate services and presents it to the user."""),
 	# version
-	"addon_version": "5.0.0",
+	"addon_version": "5.1.0",
 	# Author(s)
 	"addon_author": "Alexy Sadovoy aka Lex <lex@progger.su>, ruslan <ru2020slan@yandex.ru>, beqa <beqaprogger@gmail.com>, Mesar Hameed <mhameed@src.gnome.org>, Alberto Buffolino <a.buffolino@gmail.com>, and other NVDA contributors",
 	# URL for the add-on documentation support
