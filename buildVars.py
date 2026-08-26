@@ -21,7 +21,7 @@ addon_info = {
 	"addon_summary": "Instant Translate  ",
 	# Add-on description
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
-	"addon_description": _("""This addon translates selected or clipboard text using the Google Translate service and presents it."""),
+	"addon_description": _("""This addon translates selected or clipboard text using Translate services and presents it to the user."""),
 	# version
 	"addon_version": "5.0.0",
 	# Author(s)
@@ -54,7 +54,10 @@ addon_info = {
 # pythonSources = ["addon/globalPlugins/*.py"]
 # For more information on SCons Glob expressions please take a look at:
 # https://scons.org/doc/production/HTML/scons-user/apd.html
-pythonSources = ["addon/globalPlugins/instantTranslate/*.py"]
+pythonSources = [
+	"addon/globalPlugins/instantTranslate/*.py",
+	"addon/globalPlugins/instantTranslate/translators/*.py",
+]
 
 # Files that contain strings for translation. Usually your python sources
 i18nSources = pythonSources + ["buildVars.py"]

@@ -11,7 +11,7 @@ from urllib.parse import urlencode
 
 from logHandler import log
 
-from .httpClient import DEFAULT_TIMEOUT, Session
+from ..httpClient import DEFAULT_TIMEOUT, Session
 
 # Each group has to be a class of possible breaking points for the writing script.
 # Usually this is the major syntax marks, such as: full stop, comma, exclaim, question, etc.
@@ -20,6 +20,10 @@ ARABIC_BREAKS = "[،؛؟]"
 # U+3000 to U+303F, U+FE10 to U+FE1F, U+FE30 to U+FE6F, U+FF01 to U+FF60
 CHINESE_BREAKS = "[　-〿︐-︟︰-﹯！-｠]"
 LATIN_BREAKS = r"[.,!?;:]"
+LINE_ENDING_PATTERN = re.compile(r"\r\n|\r")
+
+LINE_RUN_PATTERN = re.compile(r"(\n+)")
+
 SPLIT_PATTERN = re.compile("|".join((ARABIC_BREAKS, CHINESE_BREAKS, LATIN_BREAKS)))
 
 def cachePath(fileName):
@@ -55,6 +59,22 @@ def splitChunks(text, chunkSize, measure=len):
 		pos = potentialPos + 1
 		potentialPos = splitMark.start()
 	yield from emit(pos, len(text))
+
+
+def normalizeLineEndings(text):
+	found = LINE_ENDING_PATTERN.search(text)
+	return LINE_ENDING_PATTERN.sub("\n", text), found.group() if found else "\n"
+
+
+def splitLineRuns(text):
+	return [part for part in LINE_RUN_PATTERN.split(text) if part]
+
+
+def splitEdges(text):
+	stripped = text.strip()
+	if not stripped:
+		return text, "", ""
+	return text[:len(text) - len(text.lstrip())], stripped, text[len(text.rstrip()):]
 
 
 class LanguageCache:
@@ -140,8 +160,12 @@ class LanguageCache:
 
 
 class BaseTranslator(threading.Thread):
-	backEndName = "base"
+	providerId = "base"
+	providerName = "base"
+	headers = {}
+	languageCache = None
 	maxChunkSize = 12000
+	measureChunk = staticmethod(encodedLength)
 	legacyCodes = {"iw": "he", "jw": "jv"}
 	timeout = DEFAULT_TIMEOUT
 
@@ -165,20 +189,25 @@ class BaseTranslator(threading.Thread):
 			)
 		self.langFrom = langFrom
 		self.langTo = langTo
-		self.text = text
+		self.text, self.lineEnding = normalizeLineEndings(text)
 		self.langSwap = langSwap
 		self.chunkSize = chunkSize or self.maxChunkSize
 		self.onSuccess = onSuccess
 		self.onError = onError
 		self.onProgress = onProgress
 		self.onFinished = onFinished
-		self.chunks = list(splitChunks(text, self.chunkSize, encodedLength))
+		self.chunks = []
+		for part in splitLineRuns(self.text):
+			if part.startswith("\n"):
+				self.chunks.append(part)
+			else:
+				self.chunks.extend(splitChunks(part, self.chunkSize, self.measureChunk))
 		self.completedChunks = 0
 		self.translation = ""
 		self.detectedLanguage = ""
 		self.error = False
 		self._stopEvent = threading.Event()
-		self.session = Session(timeout=self.timeout)
+		self.session = Session(headers=self.headers, timeout=self.timeout)
 
 	@property
 	def totalChunks(self):
@@ -194,12 +223,18 @@ class BaseTranslator(threading.Thread):
 			return 100
 		return int(round(self.completedChunks * 100.0 / self.totalChunks))
 
+	def __init_subclass__(cls, **kwargs):
+		super().__init_subclass__(**kwargs)
+		if "providerId" in cls.__dict__:
+			return
+		cls.providerId = cls.__name__.lower()
+
 	def stop(self):
 		self._stopEvent.set()
 		try:
 			self.session.close()
 		except Exception:
-			log.debug("Instant translate: cannot abort the request of %s" % self.backEndName, exc_info=True)
+			log.debug("Instant translate: cannot abort the request of %s" % self.providerId, exc_info=True)
 
 	@property
 	def shouldStop(self):
@@ -212,24 +247,35 @@ class BaseTranslator(threading.Thread):
 			self._reportOutcome()
 
 	def _translateChunks(self):
+		isFirst = True
 		for index, chunk in enumerate(self.chunks):
 			if self.shouldStop:
 				return
+			leading, stripped, trailing = splitEdges(chunk)
+			if not stripped:
+				self.translation += chunk
+				self.completedChunks = index + 1
+				self._report(self.onProgress)
+				continue
 			try:
-				translation, detected = self.translateChunk(chunk, self.langTo)
+				translation, detected = self.translateChunk(stripped, self.langTo)
 				self.detectedLanguage = self.legacyCodes.get(detected, detected)
-				if index == 0 and self.shouldSwap():
+				if isFirst and self.shouldSwap():
 					self.langTo = self.langSwap
-					translation, detected = self.translateChunk(chunk, self.langTo)
+					translation, detected = self.translateChunk(stripped, self.langTo)
+				isFirst = False
+				translation = leading + translation + trailing
 			except Exception:
 				if self.shouldStop:
 					return
-				log.exception("Instant translate: %s cannot translate %r" % (self.backEndName, chunk))
+				log.exception("Instant translate: %s cannot translate %r" % (self.providerId, chunk))
 				self.error = True
 				return
 			self.translation += translation
 			self.completedChunks = index + 1
 			self._report(self.onProgress)
+		if self.lineEnding != "\n":
+			self.translation = self.translation.replace("\n", self.lineEnding)
 
 	def _reportOutcome(self):
 		if not self.shouldStop:
@@ -242,7 +288,7 @@ class BaseTranslator(threading.Thread):
 		try:
 			callback(self)
 		except Exception:
-			log.exception("Instant translate: a %s callback failed" % self.backEndName)
+			log.exception("Instant translate: a %s callback failed" % self.providerId)
 
 	def shouldSwap(self):
 		return (

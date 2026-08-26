@@ -1,11 +1,11 @@
 # Instant Translate #
 
-* Authors: Alexy Sadovoy, Beqa Gozalishvili, Mesar Hameed, Alberto Buffolino and other NVDA contributors.
+* Authors: Alexy Sadovoy, Beka Gozalishvili, Mesar Hameed, Alberto Buffolino and other NVDA contributors.
 * Download [stable version][1]
 * Download [development version][2]
 
 This add-on is used to translate selected and/or clipboard text from one language to another.
-This is done using the Google Translate service.
+This is done using the Google Translate or the DeepL service, whichever you select.
 
 ## Configuring languages ##
 To configure source, target and in case swap language, go to: NVDA Menu >> Preferences >> Instant Translate Settings.
@@ -14,7 +14,11 @@ There are two comboboxes labeled "Source language" and "Target language", and a 
 
 In addition, if you selected auto option (the first choice) from "Source language" combobox, there are also a combobox labeled "Language for swapping" and a checkbox about the auto-swap.
 
-The "Language pairs..." button opens a dialog where you can store up to ten source and target language pairs. Each pair is bound to a key of the Instant Translate layer, the first one to 1 and the tenth one to 0, so that pressing that key switches the source and target languages to that pair. Use the Add, Edit and Remove buttons to manage the list, and Move up and Move down to change which key activates a pair.
+The "Translation service" combobox selects the service that performs the translations, currently Google Translate or DeepL. The N command of the layer switches to the next one without opening the settings. Note that DeepL does not publish the list of languages it supports, so the built-in list is offered for it; asking it for a language it does not handle returns the text untranslated rather than an error.
+
+Two checkboxes control what is announced: "Announce when a translation starts" tells you that a translation has been sent and that you have to wait for it, and "Beep while a translation is in progress" plays a short beep every second until it arrives.
+
+The "Language pairs..." button opens a dialog where you can store up to ten source and target language pairs. Each pair is bound to a key of the Instant Translate layer, the first one to 1 and the tenth one to 0, so that pressing that key switches the source and target languages to that pair and translates the current selection with them. Use the Add, Edit and Remove buttons to manage the list, and Move up and Move down to change which key activates a pair.
 
 The meaning of two first comboboxes and checkbox for copy is clear, but some words about the rest are necessary. Remember always that the explanations below assume the source language set on the auto option.
 
@@ -54,7 +58,27 @@ All following commands must be pressed after modifier key "NVDA+Shift+t":
 * P: Announces how far the translation in progress has got,
 * R: Clears the cache of recent translations,
 * O: Opens the Instant Translate settings dialog,
+* N: Switches to the next translation service,
 * H: Announces all available layer commands.
+
+## Changes for 5.1.0 ##
+* Added DeepL as a translation service. The service can be chosen from settings.
+* Switching to a language pair now triggers automatic translation.
+* Added the N command to cycle through available translation services.
+* Message announcing that a translation has started can now be turned off from settings.
+* Fixed the formatting of the translated text.
+
+## Changes for 5.0.0 ##
+* Rewrote the Google Translate provider. It uses newer endpoint the service exposes.
+* languages offered for Google Translate are now fetched from the service itself.
+* Added language pairs: up to 10 source and target combinations are managed from the settings and activated with the keys 1 to 0, which switch to the pair.
+* Added the X command, stopping the translations in progress.
+* Added the P command, announcing translation progress, in parts and as a percentage.
+* Added the R command, clearing the cache of recent translations.
+* The command list (H) is now presented in a browseable window, so the commands can be reviewed one by one instead of being spoken as a single long message.
+* beeps played while a translation is in progress can be turned off from settings.
+* Added a message announcing that a translation has started.
+* Identifying the language of the selected text no longer freezes NVDA until the service answers.
 
 ## Changes for 4.7 ##
 * Updated to be compatible with python3.11 and nvda 2024.1
