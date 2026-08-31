@@ -1,0 +1,58 @@
+# Configuration for this NVDA add-on, migrated from buildVars.py.
+#
+# The comment directly above a translatable string is that string's note to
+# translators, and is carried into the generated .pot file.
+
+[addon]
+# add-on Name/identifier, internal for NVDA
+name = "instantTranslate"
+# Add-on summary, usually the user visible name of the addon.
+summary = "Instant Translate  "
+
+# Add-on description
+# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+description = "This addon translates selected or clipboard text using Translate services and presents it to the user."
+
+# version
+version = "5.1.0"
+# Author(s)
+author = "Alexy Sadovoy aka Lex <lex@progger.su>, ruslan <ru2020slan@yandex.ru>, beqa <beqaprogger@gmail.com>, Mesar Hameed <mhameed@src.gnome.org>, Alberto Buffolino <a.buffolino@gmail.com>, and other NVDA contributors"
+# URL for the add-on documentation support
+url = "https://github.com/addonFactory/instantTranslate"
+# URL for the add-on repository where the source code can be found
+sourceURL = "https://github.com/addonFactory/instantTranslate"
+# Documentation file name
+docFileName = "readme.html"
+# Minimum NVDA version supported (e.g. "2018.3.0", minor version is optional)
+minimumNVDAVersion = "2019.3.0"
+# Last NVDA version supported/tested (e.g. "2018.4.0", ideally more recent than minimum version)
+lastTestedNVDAVersion = "2026.1.0"
+# Add-on update channel (default is None, denoting stable releases,
+# and for development releases, use "dev".)
+# Do not change unless you know what you are doing!
+updateChannel = "stable"
+# Add-on license such as GPL 2
+license = "GPL v2"
+# URL for the license document the ad-on is licensed under
+licenseURL = "https://www.gnu.org/licenses/gpl-2.0.html"
+
+[release]
+tagPrefix = "v"
+
+[build]
+# The Python files that make up this add-on, scanned for translatable strings.
+pythonSources = ["addon/globalPlugins/instantTranslate/*.py", "addon/globalPlugins/instantTranslate/translators/*.py"]
+
+# Files inside the `addon` directory to leave out of the built add-on.
+excludedFiles = []
+
+[l10n]
+# The language this add-on is written in.
+baseLanguage = "en"
+
+# Extra files to scan for translatable strings.
+extraSources = []
+
+[docs]
+# Python-Markdown extensions used when rendering documentation.
+markdownExtensions = []
