@@ -1,3 +1,26 @@
+# Development environment for this add-on.
+#
+# The add-on itself is not a Python package -- NVDA loads it from the `addon`
+# directory -- so nothing here is published. This file declares the tools needed
+# to build and lint it. The add-on's own metadata lives in addon.toml.
+
+[project]
+name = "instanttranslate-dev"
+version = "0.0.0"
+description = "Development environment for the Instant Translate NVDA add-on"
+requires-python = ">=3.13"
+dependencies = [
+    "nvda-addon-kit",
+]
+
+[dependency-groups]
+lint = [
+    "ruff==0.16.5",
+]
+dev = [
+    { include-group = "lint" },
+]
+
 [tool.ruff]
 builtins = [
     "_",
@@ -8,8 +31,3 @@ builtins = [
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F"]
 ignore = ["N802", "N803"]
-
-[tool.ruff.lint.per-file-ignores]
-# sconstruct contains many inbuilt functions not recognised by the lint,
-# so ignore F821.
-"sconstruct" = ["F821"]

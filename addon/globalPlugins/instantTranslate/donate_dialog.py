@@ -1,17 +1,19 @@
-#donate_dialog.py
+# donate_dialog.py
 # Copyright (C) 2022-2023 Beqa Gozalishvili <beqaprogger@gmail.com>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import addonHandler
-import gui
+
 try:
     # NVDA version >= 2025.1
     from gui.message import MessageDialog, DialogType
+
     DIALOG_TYPE_WARNING = DialogType.WARNING
 except ImportError:
     # NVDA version < 2025.1
     from gui.nvdaControls import MessageDialog
+
     DIALOG_TYPE_WARNING = MessageDialog.DIALOG_TYPE_WARNING
 import webbrowser
 import wx
@@ -27,8 +29,12 @@ class DonationDialog(MessageDialog):
         super().__init__(parent, title, message, dialogType=DIALOG_TYPE_WARNING)
 
     def _addButtons(self, buttonHelper):
-        paypalBtn = buttonHelper.addButton(self, label=_("Donate via Paypal"), name="PAYPAL_URL")
-        yoomoneyBtn = buttonHelper.addButton(self, label=_("Donate via Yoomoney"), name="YOOMONEY_URL")
+        paypalBtn = buttonHelper.addButton(
+            self, label=_("Donate via Paypal"), name="PAYPAL_URL"
+        )
+        yoomoneyBtn = buttonHelper.addButton(
+            self, label=_("Donate via Yoomoney"), name="YOOMONEY_URL"
+        )
         paypalBtn.Bind(wx.EVT_BUTTON, self.onDonate)
         yoomoneyBtn.Bind(wx.EVT_BUTTON, self.onDonate)
         cancelBtn = buttonHelper.addButton(self, id=wx.ID_CANCEL)
@@ -40,11 +46,14 @@ class DonationDialog(MessageDialog):
         webbrowser.open(donateUrl)
         self.EndModal(wx.OK)
 
+
 def requestDonations(parentWindow):
     addon = addonHandler.getCodeAddon()
     addonName = addon.name
     title = _("Request for contributions to {name}").format(name=addonName)
-    message = _("{name} is a free add-on for NVDA.\n"
-    "You can make a donation to its author to support further development of this and other free projects.\n"
-    "Do you want to donate now? Choose one of the available payment methods. You will be redirected to the corresponding website to complete a donation").format(name=addonName)
+    message = _(
+        "{name} is a free add-on for NVDA.\n"
+        "You can make a donation to its author to support further development of this and other free projects.\n"
+        "Do you want to donate now? Choose one of the available payment methods. You will be redirected to the corresponding website to complete a donation"
+    ).format(name=addonName)
     return DonationDialog(parentWindow, title, message).ShowModal()

@@ -21,61 +21,63 @@ addonHandler.initTranslation()
 
 
 class Google(BaseTranslator):
-	# Translators: the name of a translation service, presented when switching between services.
-	providerName = _("Google Translate")
-	headers = HEADERS
-	maxChunkSize = 12000
+    # Translators: the name of a translation service, presented when switching between services.
+    providerName = _("Google Translate")
+    headers = HEADERS
+    maxChunkSize = 12000
 
-	def translateChunk(self, chunk, langTo):
-		params = [
-			("params.client", CLIENT_NAME),
-			("query.source_language", self.langFrom),
-			("query.target_language", langTo),
-			("query.display_language", displayLanguage()),
-			("query.text", chunk),
-			("key", API_KEY),
-		]
-		params += [("data_types", dataType) for dataType in DATA_TYPES]
-		response = self.session.get(TRANSLATE_URL, params=params).json()
-		sentences = response[1] if len(response) > 1 else None
-		if sentences:
-			translation = "".join(sentence[0] for sentence in sentences if sentence and sentence[0])
-		else:
-			translation = response[0] or ""
-		detected = response[5] if len(response) > 5 and response[5] else self.langFrom
-		return translation, detected
+    def translateChunk(self, chunk, langTo):
+        params = [
+            ("params.client", CLIENT_NAME),
+            ("query.source_language", self.langFrom),
+            ("query.target_language", langTo),
+            ("query.display_language", displayLanguage()),
+            ("query.text", chunk),
+            ("key", API_KEY),
+        ]
+        params += [("data_types", dataType) for dataType in DATA_TYPES]
+        response = self.session.get(TRANSLATE_URL, params=params).json()
+        sentences = response[1] if len(response) > 1 else None
+        if sentences:
+            translation = "".join(
+                sentence[0] for sentence in sentences if sentence and sentence[0]
+            )
+        else:
+            translation = response[0] or ""
+        detected = response[5] if len(response) > 5 and response[5] else self.langFrom
+        return translation, detected
 
 
 def displayLanguage():
-	return languageHandler.getLanguage().replace("_", "-")
+    return languageHandler.getLanguage().replace("_", "-")
 
 
 def fetchLanguages():
-	params = [
-		("client", CLIENT_NAME),
-		("display_language", displayLanguage()),
-		("key", API_KEY),
-	]
-	response = httpClient.get(LANGUAGES_URL, params=params, headers=HEADERS).json()
-	return {
-		"source": _asLanguageDict(response[0]),
-		"target": _asLanguageDict(response[1]),
-	}
+    params = [
+        ("client", CLIENT_NAME),
+        ("display_language", displayLanguage()),
+        ("key", API_KEY),
+    ]
+    response = httpClient.get(LANGUAGES_URL, params=params, headers=HEADERS).json()
+    return {
+        "source": _asLanguageDict(response[0]),
+        "target": _asLanguageDict(response[1]),
+    }
 
 
 def _asLanguageDict(languages):
-	return {
-		BaseTranslator.legacyCodes.get(code, code): name
-		for code, name in languages
-		if code and name
-	}
+    return {
+        BaseTranslator.legacyCodes.get(code, code): name
+        for code, name in languages
+        if code and name
+    }
 
 
 languageCache = LanguageCache(
-	path=cachePath(LANGUAGES_FILE),
-	ttl=LANGUAGES_TTL,
-	fetch=fetchLanguages,
-	getContext=displayLanguage,
+    path=cachePath(LANGUAGES_FILE),
+    ttl=LANGUAGES_TTL,
+    fetch=fetchLanguages,
+    getContext=displayLanguage,
 )
 
 Google.languageCache = languageCache

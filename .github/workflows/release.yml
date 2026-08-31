@@ -2,8 +2,10 @@ name: Addon-release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: [master]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   release:
@@ -14,23 +16,27 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
+    - name: Install uv
+      uses: astral-sh/setup-uv@v10
       with:
-        python-version: 3.11
-        cache: "pip"
+        enable-cache: true
+        python-version: "3.13"
 
     - name: Install dependencies
-      run: |
-        pip install scons markdown
-        sudo apt update
-        sudo apt install gettext
+      run: uv sync
+
+    - name: Lint
+      run: uv run ruff check addon
+
+    - name: Validate addon.toml
+      run: uv run nvaddon check
 
     - name: Build addon
-      run: scons
+      run: uv run nvaddon build
 
     - name: Upload release
       id: release
+      if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -38,19 +44,26 @@ jobs:
         files: |
           *.nvda-addon
         generate_release_notes: true
-        prerelease: false
+        prerelease: ${{ !endsWith(github.ref, '-stable') }}
 
     - name: extract addon info
+      if: startsWith(github.ref, 'refs/tags/')
       run: |
-        python3 -c 'from buildVars import addon_info
-        env = {
-            "ADDON_NAME": addon_info["addon_name"],
-            "ADDON_VERSION": addon_info["addon_version"],
-            "ADDON_CHANNEL": addon_info["addon_updateChannel"],
+        uv run python -c '
+        import os, tomllib
+        addon = tomllib.load(open("addon.toml", "rb"))["addon"]
+        fields = {
+            "ADDON_NAME": addon["name"],
+            "ADDON_VERSION": addon["version"],
+            "ADDON_CHANNEL": addon.get("updateChannel") or "stable",
         }
-        [print(f"{k}={v}") for k, v in env.items()]' > "$GITHUB_ENV"
+        with open(os.environ["GITHUB_ENV"], "a") as env:
+            for key, value in fields.items():
+                env.write(f"{key}={value}\n")
+        '
 
     - name: submit addon
+      if: startsWith(github.ref, 'refs/tags/')
       uses: beqabeqa473/submitNVDAAddon@v1
       with:
         addon_name: ${{ env.ADDON_NAME }}
